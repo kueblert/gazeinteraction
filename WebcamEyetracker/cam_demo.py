@@ -35,7 +35,6 @@ fps = 0
 frame_num = 0
 frame_samples = 6
 fps_timer = time.time()
-#cap = cv2.VideoCapture('ksvideosrc device-name="RYS ONE" ! image/jpeg, width=640, height=480, framerate=(fraction)60/1 ! queue ! jpegdec ! queue ! videoconvert ! appsink')
 
 cap = cv2.VideoCapture('ksvideosrc device-name="Intel(R) RealSense(TM) Depth Camera 435 with RGB Module RGB" ! video/x-raw,format=YUY2, width=640, height=480, framerate=(fraction)30/1 ! queue ! videoconvert ! appsink')
 face_detector = FaceDetector(device=device)
