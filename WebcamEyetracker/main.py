@@ -13,7 +13,7 @@ class Mainloop(GazeObserver):
 
         # CALIBRATION
         self.calibration = Calibration()
-        self.imsize = (1024, 1600)
+        self.imsize = (600, 800)
         border = 10
         x_step = (self.imsize[1]-border*2)/2
         y_step= (self.imsize[0]-border*2)/2
