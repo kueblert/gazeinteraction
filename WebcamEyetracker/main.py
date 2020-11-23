@@ -7,8 +7,7 @@ from SmoothingFilter import RingBuffer
 
 class Mainloop(GazeObserver):
     def __init__(self):
-        self.eye = Eyetracker(
-            'ksvideosrc device-name="Intel(R) RealSense(TM) Depth Camera 435 with RGB Module RGB" ! video/x-raw,format=YUY2, width=640, height=480, framerate=(fraction)30/1 ! queue ! videoconvert ! appsink')
+        self.eye = Eyetracker(0)
         self.eye.subscribe(self)
         self.eye.start()
 
