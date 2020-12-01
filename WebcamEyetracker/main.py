@@ -3,10 +3,12 @@ from Calibration import Calibration
 import cv2
 import numpy as np
 from SmoothingFilter import RingBuffer
+from Button import Button
 
 
 class Mainloop(GazeObserver):
     def __init__(self):
+        self.button = Button()
         self.eye = Eyetracker(0)
         self.eye.subscribe(self)
         self.eye.start()
@@ -16,7 +18,7 @@ class Mainloop(GazeObserver):
         self.imsize = (600, 800)
         border = 10
         x_step = (self.imsize[1]-border*2)/2
-        y_step= (self.imsize[0]-border*2)/2
+        y_step = (self.imsize[0]-border*2)/2
         self.stim_pos = []
         for x in range(3):
             for y in range(3):
@@ -25,7 +27,7 @@ class Mainloop(GazeObserver):
         # CALIBRATION
 
         # FILTER
-        #self.smoother = RingBuffer(1)
+        self.smoother = RingBuffer(1)
         # FILTER
 
     def __del__(self):
@@ -43,10 +45,11 @@ class Mainloop(GazeObserver):
             self.calibration.push_sample((gaze[0], gaze[1]), self.stim_pos[self.current_stim])
         else:
             gaze = self.calibration.apply_calibration((gaze[0], gaze[1]))
-            #self.smoother.append(gaze)
+            self.smoother.append(gaze)
             radius = 10
-            #gaze = self.smoother.get_mean()
+            gaze = self.smoother.get_mean()
             cv2.circle(calibration_img, (int(gaze[0]), int(gaze[1])), radius, (0, 255, 0), -1)
+            self.button.draw(gaze, calibration_img)
         cv2.imshow("stimulus", calibration_img)
         # CALIBRATION
 

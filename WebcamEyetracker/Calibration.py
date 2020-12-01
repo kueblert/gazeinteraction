@@ -31,8 +31,10 @@ class Calibration:
         t_x = np.array(self.stimulus_samples)[:, 0].flatten()  # coordinate of the calibration marker on the screen
         t_y = np.array(self.stimulus_samples)[:, 1].flatten()
 
-        # TODO: Implement the actual fit here!
-        # YOUR CODE HERE!
+        # actual fit
+        polynomial = Calibration.polynomial_2nd_order(X, Y)
+        self.coefficients_x = np.linalg.lstsq(polynomial, t_x, rcond=None)[0]
+        self.coefficients_y = np.linalg.lstsq(polynomial, t_y, rcond=None)[0]
 
     def apply_calibration(self, gaze: Sequence[float]) -> Sequence[float]:
         return np.matmul(Calibration.polynomial_2nd_order(gaze[0], gaze[1]),
